@@ -23,6 +23,7 @@ int	zoom(int key, int x, int y, t_data *img)
 {
 	img->x_offset = x;
 	img->y_offset = y;
+	printf("x = %d ; y = %d ; key = %d \n ",x,y,key);
 	if (key == 4)
 		img->scale *= 1.1f;
 	else if (key == 5)
@@ -31,13 +32,15 @@ int	zoom(int key, int x, int y, t_data *img)
 	return (0);
 }
 
-int close_win(int key,void *k)
+int close_win(int key,void *p)
 {
-	if (key == 55)
-	printf("key = %d", key);
-	else 
+	p = 0;
+	//p->k = key;
+	//printf("key = %d \n " ,key);
+		if(key == 53)
+			exit(1);
+		
 	return (0);
-
 }
 
 void	plan_complex(t_cor *p, t_data *img)
@@ -49,7 +52,7 @@ void	plan_complex(t_cor *p, t_data *img)
 void	draw_fractal(t_cor *p, t_data *img)
 {
 	p->max = 200;
-	p->color = ((p->iteration * 0.19) * 0xade8f4);
+	p->color = ((p->iteration *0.19) * 0xade8f4);
 	if (p->iteration < p->max)
 		my_mlx_pixel_put(img, p->col, p->row, p->color);
 	else

@@ -48,7 +48,7 @@ typedef struct s_cor{
 	int		max;
 	double	row;
 	double	col;
-	int		key;
+	int		k;
 }	t_cor;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -59,7 +59,7 @@ int		zoom(int key, int x, int y, t_data *img);
 int		ft_strncmp(char *s1, char *s2, int n);
 int		mandelbrot_set(t_cor p);
 int		fill_image(t_data *img);
-int		close_win(int key,void *k);
+int		close_win(int key,void *p);
 
 
 #endif

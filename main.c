@@ -28,7 +28,6 @@ int	ft_strncmp(char *s1, char *s2, int n)
 int	main(int ac, char **av)
 {
 	t_data	img;
-	void *k = NULL ;
 
 	if ((ac == 2) && (!ft_strncmp("M", av[1], 1) || !ft_strncmp("J", av[1], 2)
 			|| !ft_strncmp("J1", av[1], 2) || !ft_strncmp("J2", av[1], 2)
@@ -45,7 +44,7 @@ int	main(int ac, char **av)
 				&img.line_length, &img.endian);
 		mlx_loop_hook(img.mlx, fill_image, &img);
 		mlx_mouse_hook(img.win, zoom, &img);
-		mlx_key_hook(img.win,close,k);
+		mlx_key_hook(img.win,close_win,(void*)0);
 		mlx_loop(img.mlx);
 	}
 	else
