@@ -10,7 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "fractol.h"
-
+int closex(int keycode , void *p)
+{
+	(void)keycode;
+	(void)p;
+	exit(1);
+	return 0;
+}
 int	ft_strncmp(char *s1, char *s2, int n)
 {
 	int	i;
@@ -29,7 +35,7 @@ int	main(int ac, char **av)
 {
 	t_data	img;
 
-	if ((ac == 2) && (!ft_strncmp("M", av[1], 1) || !ft_strncmp("J", av[1], 2)
+	if ((ac == 2) && (!ft_strncmp("M", av[1], 2) || !ft_strncmp("J", av[1], 2)
 			|| !ft_strncmp("J1", av[1], 2) || !ft_strncmp("J2", av[1], 2)
 			|| !ft_strncmp("J3", av[1], 2)))
 	{
@@ -45,6 +51,7 @@ int	main(int ac, char **av)
 		mlx_loop_hook(img.mlx, fill_image, &img);
 		mlx_mouse_hook(img.win, zoom, &img);
 		mlx_key_hook(img.win,close_win,(void*)0);
+		mlx_hook(img.win, 17, 0, closex,(void*)0);
 		mlx_loop(img.mlx);
 	}
 	else

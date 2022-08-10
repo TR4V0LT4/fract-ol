@@ -23,7 +23,6 @@ int	zoom(int key, int x, int y, t_data *img)
 {
 	img->x_offset = x;
 	img->y_offset = y;
-	printf("x = %d ; y = %d ; key = %d \n ",x,y,key);
 	if (key == 4)
 		img->scale *= 1.1f;
 	else if (key == 5)
@@ -35,8 +34,6 @@ int	zoom(int key, int x, int y, t_data *img)
 int close_win(int key,void *p)
 {
 	p = 0;
-	//p->k = key;
-	//printf("key = %d \n " ,key);
 		if(key == 53)
 			exit(1);
 		
