@@ -1,6 +1,6 @@
 NAME = fractol
 
-SRC = main.c draw.c fractals.c 
+SRC = main.c draw.c fractals.c events.c param.c
 
 OBJ = ${SRC:%.c=%.o}
 

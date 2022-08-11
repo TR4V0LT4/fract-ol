@@ -6,7 +6,7 @@
 /*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 17:36:58 by wlahyani          #+#    #+#             */
-/*   Updated: 2022/08/09 17:37:05 by wlahyani         ###   ########.fr       */
+/*   Updated: 2022/08/11 11:35:39 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	initialise_julia(t_cor *p, t_data img);
 void	plan_complex(t_cor *p, t_data *img);
 void	draw_fractal(t_cor *p, t_data *img);
+void	guide(void);
 int		zoom(int key, int x, int y, t_data *img);
 int		ft_strncmp(char *s1, char *s2, int n);
 int		mandelbrot_set(t_cor p);
 int		fill_image(t_data *img);
-int		close_win(int key,void *p);
-
+int		close_win(int key, void *p);
+int		closex(int keycode, void *p);
 
 #endif

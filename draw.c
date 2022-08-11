@@ -19,27 +19,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-int	zoom(int key, int x, int y, t_data *img)
-{
-	img->x_offset = x;
-	img->y_offset = y;
-	if (key == 4)
-		img->scale *= 1.1f;
-	else if (key == 5)
-		img->scale *= 0.9f;
-	
-	return (0);
-}
-
-int close_win(int key,void *p)
-{
-	p = 0;
-		if(key == 53)
-			exit(1);
-		
-	return (0);
-}
-
 void	plan_complex(t_cor *p, t_data *img)
 {
 	p->r = ((p->col - (img->width / 2)) * 4) * img->scale / (img->width);
@@ -49,7 +28,7 @@ void	plan_complex(t_cor *p, t_data *img)
 void	draw_fractal(t_cor *p, t_data *img)
 {
 	p->max = 200;
-	p->color = ((p->iteration *0.19) * 0xade8f4);
+	p->color = ((p->iteration * 0.19) * 0xade8f4);
 	if (p->iteration < p->max)
 		my_mlx_pixel_put(img, p->col, p->row, p->color);
 	else
