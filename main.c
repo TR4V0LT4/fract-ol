@@ -22,11 +22,9 @@ int	main(int ac, char **av)
 	{
         
 	    img.t = av[1];
-        img.height = 600;
-        img.width = 600;
         img.scale = 1.0;
-        img.x_offset = img.width / 2;
-     img.y_offset = img.height / 2;
+        img.x_offset = WIDTH / 2;
+        img.y_offset = HEIGHT / 2;
 
         img.mlx = mlx_init();
         if (!img.mlx) {
@@ -34,14 +32,14 @@ int	main(int ac, char **av)
             return (1);
         }
 
-        img.win = mlx_new_window(img.mlx, img.width, img.height, "Hello");
+        img.win = mlx_new_window(img.mlx, WIDTH, HEIGHT, "Hello");
         if (!img.win) {
             fprintf(stderr, "Window creation failed\n");
             mlx_destroy_display(img.mlx);
             return (1);
         }
 
-        img.img = mlx_new_image(img.mlx, img.width, img.height);
+        img.img = mlx_new_image(img.mlx, WIDTH, HEIGHT);
         if (!img.img) {
             fprintf(stderr, "Image creation failed\n");
             mlx_destroy_window(img.mlx, img.win);
@@ -56,8 +54,6 @@ int	main(int ac, char **av)
         mlx_mouse_hook(img.win, zoom, &img);
         mlx_key_hook(img.win, close_win, (void *)0);
         mlx_hook(img.win, 17, 0, closex, (void *)0);
-		mlx_hook(img.win, 2, 1L << 0, handle_keypress, &img);
-
         mlx_loop(img.mlx);
 	}
 	else

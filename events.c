@@ -13,21 +13,14 @@
 
 int zoom(int button, int x, int y, t_data *img)
 {
-    double zoom_factor;
-
-    if (button == 4) // Scroll up (zoom in)
-        zoom_factor = 1.1;
-    else if (button == 5) // Scroll down (zoom out)
-        zoom_factor = 0.9;
-    else
+    if (button != 4 && button != 5)
         return (0);
 
-    // Update the mouse position
-     double mouse_r, mouse_i;  // Complex coordinates of the mouse
-    mouse_r = ((x - img->x_offset) * img->scale);
-    mouse_i = ((y - img->y_offset) * img->scale);
+    double zoom_factor = (button == 4) ? 1.1 : 0.9;
 
-    // Update the zoom scale
+    double mouse_r = (x - img->x_offset) * img->scale;
+    double mouse_i = (y - img->y_offset) * img->scale;
+
     img->scale *= zoom_factor;
     img->x_offset = x - (mouse_r / img->scale);
     img->y_offset = y - (mouse_i / img->scale);

@@ -4,7 +4,7 @@ SRC = main.c draw.c fractals.c events.c param.c
 
 OBJ = ${SRC:%.c=%.o}
 
-FLAGS = 
+FLAGS = -Wall -Wextra -Werror
 
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a

@@ -20,15 +20,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 
 
-void	plan_complex(t_cor *p, t_data *img)
-{
-    double scale_x = (4 * img->scale) / img->width;
-    double scale_y = (4 * img->scale) / img->height;
-
-    p->r = (p->col - img->x_offset) * scale_x;
-    p->i = (p->row - img->y_offset) * scale_y;
-}
-
 int trippy_color(int iteration)
 {
     double t = (double)iteration / 200.0; // Normalize between 0 and 1
@@ -38,6 +29,16 @@ int trippy_color(int iteration)
     
     return (r << 16) | (g << 8) | b;
 }
+
+void	plan_complex(t_cor *p, t_data *img)
+{
+    double scale_x = (4 * img->scale) / WIDTH;
+    double scale_y = (4 * img->scale) / HEIGHT;
+
+    p->r = (p->col - img->x_offset) * scale_x;
+    p->i = (p->row - img->y_offset) * scale_y;
+}
+
 
 void	draw_fractal(t_cor *p, t_data *img)
 {
@@ -50,28 +51,31 @@ void	draw_fractal(t_cor *p, t_data *img)
 int fill_image(t_data *img)
 {
     t_cor p;
+    t_fractal frac;
 
-    p.row = 0;
-    
-    while (p.row < img->height)
+    setup_fractal(&frac, img);
+    for (p.row = 0; p.row < HEIGHT; p.row++)
     {
-        p.col = 0;
-        while (p.col < img->width)
+        for (p.col = 0; p.col < WIDTH; p.col++)
         {
             plan_complex(&p, img);
-            if (!ft_strncmp("M", img->t, 1))
+            if (frac.is_mandelbrot)
             {
                 p.c_r = p.r;
                 p.c_i = p.i;
                 p.x = 0;
                 p.y = 0;
             }
-            initialise_julia(&p, *img);
-            p.iteration = mandelbrot_set(p);
+            else
+            {
+                p.x = p.r;
+                p.y = p.i;
+                p.c_r = frac.c_r;
+                p.c_i = frac.c_i;
+            }
+            p.iteration = calculate_iterations(p);
             draw_fractal(&p, img);
-            p.col++;
         }
-        p.row++;
     }
     mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
     return (0);
