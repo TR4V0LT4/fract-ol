@@ -23,6 +23,7 @@ int	mandelbrot_set(t_cor p)
 		p.y = (2 * p.x * p.y) + p.c_i;
 		p.x = temp;
 		p.iteration++;
+		if (p.iteration > p.max) break;
 	}	
 	return (p.iteration);
 }

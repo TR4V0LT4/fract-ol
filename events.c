@@ -11,15 +11,28 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-int	zoom(int key, int x, int y, t_data *img)
+int zoom(int button, int x, int y, t_data *img)
 {
-	img->x_offset = x;
-	img->y_offset = y;
-	if (key == 4)
-		img->scale *= 1.1f;
-	else if (key == 5)
-		img->scale *= 0.9f;
-	return (0);
+    double zoom_factor;
+
+    if (button == 4) // Scroll up (zoom in)
+        zoom_factor = 1.1;
+    else if (button == 5) // Scroll down (zoom out)
+        zoom_factor = 0.9;
+    else
+        return (0);
+
+    // Update the mouse position
+     double mouse_r, mouse_i;  // Complex coordinates of the mouse
+    mouse_r = ((x - img->x_offset) * img->scale);
+    mouse_i = ((y - img->y_offset) * img->scale);
+
+    // Update the zoom scale
+    img->scale *= zoom_factor;
+    img->x_offset = x - (mouse_r / img->scale);
+    img->y_offset = y - (mouse_i / img->scale);
+
+    return (0);
 }
 
 int	close_win(int key, void *p)

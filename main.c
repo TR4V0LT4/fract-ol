@@ -15,26 +15,52 @@ int	main(int ac, char **av)
 {
 	t_data	img;
 
+
 	if ((ac == 2) && (!ft_strncmp("M", av[1], 2) || !ft_strncmp("J", av[1], 2)
 			|| !ft_strncmp("J1", av[1], 2) || !ft_strncmp("J2", av[1], 2)
 			|| !ft_strncmp("J3", av[1], 2)))
 	{
-	img.t = av[1];
-	img.height = 1000 ;
-	img.width = 1000;
-	img.scale = 1.0;
-	img.mlx = mlx_init();
-	img.win = mlx_new_window(img.mlx, img.width, img.height, "Hello");
-	img.img = mlx_new_image(img.mlx, img.width, img.height);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-				&img.line_length, &img.endian);
-		mlx_loop_hook(img.mlx, fill_image, &img);
-		mlx_mouse_hook(img.win, zoom, &img);
-		mlx_key_hook(img.win, close_win, (void *)0);
-		mlx_hook(img.win, 17, 0, closex, (void *)0);
-		mlx_loop(img.mlx);
+        
+	    img.t = av[1];
+        img.height = 600;
+        img.width = 600;
+        img.scale = 1.0;
+        img.x_offset = img.width / 2;
+     img.y_offset = img.height / 2;
+
+        img.mlx = mlx_init();
+        if (!img.mlx) {
+            fprintf(stderr, "MLX initialization failed\n");
+            return (1);
+        }
+
+        img.win = mlx_new_window(img.mlx, img.width, img.height, "Hello");
+        if (!img.win) {
+            fprintf(stderr, "Window creation failed\n");
+            mlx_destroy_display(img.mlx);
+            return (1);
+        }
+
+        img.img = mlx_new_image(img.mlx, img.width, img.height);
+        if (!img.img) {
+            fprintf(stderr, "Image creation failed\n");
+            mlx_destroy_window(img.mlx, img.win);
+            mlx_destroy_display(img.mlx);
+            return (1);
+        }
+
+        img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+                                     &img.line_length, &img.endian);
+
+        mlx_loop_hook(img.mlx, fill_image, &img);
+        mlx_mouse_hook(img.win, zoom, &img);
+        mlx_key_hook(img.win, close_win, (void *)0);
+        mlx_hook(img.win, 17, 0, closex, (void *)0);
+		mlx_hook(img.win, 2, 1L << 0, handle_keypress, &img);
+
+        mlx_loop(img.mlx);
 	}
 	else
-		guide(void);
+		guide();
 	return (0);
 }

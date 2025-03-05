@@ -4,21 +4,28 @@ SRC = main.c draw.c fractals.c events.c param.c
 
 OBJ = ${SRC:%.c=%.o}
 
-FLAGS =  -Wall -Wextra -Werror 
+FLAGS = 
 
-COPILATION =  -I /usr/local/include  -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+MLX_DIR = minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_INC = -I $(MLX_DIR)
 
-%.o:%.c
-		cc $(FLAGS)  -c $< -o $@
+LDFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-all : $(NAME)
+%.o: %.c
+	cc $(FLAGS) $(MLX_INC) -c $< -o $@
+
+all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(FLAGS) $(COPILATION) $(OBJ) -o $(NAME)
+	make -C $(MLX_DIR)
+	cc $(FLAGS) $(OBJ) $(MLX_LIB) $(LDFLAGS) -o $(NAME)
 
-clean :
-	rm -rf $(OBJ) 
+clean:
+	rm -rf $(OBJ)
+	make -C $(MLX_DIR) clean
 
-fclean : clean
-	rm -rf  $(NAME) 
-re : fclean all
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all
